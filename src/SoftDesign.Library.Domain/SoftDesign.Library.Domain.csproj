@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
+            Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{3D8936B0-9291-4664-AECE-0B097DF6175B}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>SoftDesign.Library.Domain</RootNamespace>
+        <AssemblyName>SoftDesign.Library.Domain</AssemblyName>
+        <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System"/>
+        <Reference Include="System.ComponentModel.DataAnnotations" />
+        <Reference Include="System.Core"/>
+        <Reference Include="System.Data"/>
+        <Reference Include="System.Xml"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Entities\Books\Book.Actions.cs" />
+        <Compile Include="Entities\Books\Book.cs" />
+        <Compile Include="Entities\Books\BookValidator.cs" />
+        <Compile Include="Entities\Books\IsbnValidator.cs" />
+        <Compile Include="Entities\Core\BaseEntity.cs" />
+        <Compile Include="Entities\Rentals\RentalValidator.cs" />
+        <Compile Include="Entities\Rentals\Rental.Actions.cs" />
+        <Compile Include="Entities\Rentals\Rental.cs" />
+        <Compile Include="Entities\Users\PasswordValidator.cs" />
+        <Compile Include="Entities\Users\User.Actions.cs" />
+        <Compile Include="Entities\Users\User.cs" />
+        <Compile Include="Entities\Users\UserValidator.cs" />
+        <Compile Include="Interfaces\Repositories\IBookRepository.cs" />
+        <Compile Include="Interfaces\Repositories\IRentalRepository.cs" />
+        <Compile Include="Interfaces\Repositories\IUserRepository.cs" />
+        <Compile Include="Interfaces\Services\IAuthenticationService.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs"/>
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\SoftDesign.Library.Cross.Core\SoftDesign.Library.Cross.Core.csproj">
+        <Project>{2aaed12e-8f15-43d2-b9ea-4e9840bd09f8}</Project>
+        <Name>SoftDesign.Library.Cross.Core</Name>
+      </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Validators\" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+
+</Project>

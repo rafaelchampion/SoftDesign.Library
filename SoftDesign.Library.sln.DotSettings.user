@@ -1,0 +1,11 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/Environment/Hierarchy/EntityFrameworkOptions/IsAlreadyNotifiedAboutEntityFramework/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=99c287eb_002D937b_002D414a_002D8838_002D6e39e36bb14b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateBook_ShouldSucceed_WhenValidDetailsAreProvided" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="D:\Arquivos\Documentos\Projetos\SoftDesign.Library\tests\SoftDesign.Library.UnitTests" Presentation="&amp;lt;Tests&amp;gt;\&amp;lt;SoftDesign.Library.UnitTests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d8a7f907_002D6d57_002D4fda_002D8c2e_002D69fa913d646d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateBook_ShouldSucceed_WhenValidDetailsAreProvided #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="D:\Arquivos\Documentos\Projetos\SoftDesign.Library\tests\SoftDesign.Library.UnitTests" Presentation="&amp;lt;Tests&amp;gt;\&amp;lt;SoftDesign.Library.UnitTests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	
+	
+	</wpf:ResourceDictionary>
