@@ -4,11 +4,11 @@ namespace SoftDesign.Library.Domain.Entities.Rentals
 {
     internal static class RentalValidator
     {
-        internal static DomainResult Validate(Rental rental)
+        internal static Result Validate(Rental rental)
         {
             if (rental.RentalDate > rental.ExpectedReturnDate)
-                return DomainResult<Rental>.Failure("Rental date cannot be later than expected return date.");
-            return DomainResult.Success();
+                return Result<Rental>.Failure("Rental date cannot be later than expected return date.");
+            return Result.Success();
         }
     }
 }

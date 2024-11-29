@@ -20,9 +20,9 @@ namespace SoftDesign.Library.Domain.Entities.Rentals
 
         #region === RELATIONSHIPS ===
 
-        [ForeignKey("BookId")] public virtual Book Book { get; set; }
+        public virtual Book Book { get; set; }
 
-        [ForeignKey("UserId")] public virtual User User { get; set; }
+        public virtual User User { get; set; }
 
         #endregion
 

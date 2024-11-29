@@ -11,9 +11,9 @@ namespace SoftDesign.Library.Domain.Entities.Books
     {
         #region === PROPERTIES ===
         
-        public string Title { get; }
-        public string Author { get; }
-        public string Isbn { get; }
+        public string Title { get; private set; }
+        public string Author { get; private set; }
+        public string Isbn { get; private set; }
         [NotMapped]
         public bool IsRented => BookRentals.Any(x => x.ActualReturnDate == null);
         [NotMapped]
@@ -25,7 +25,7 @@ namespace SoftDesign.Library.Domain.Entities.Books
 
         #region === RELATIONSHIPS ===
        
-        protected virtual ICollection<Rental> BookRentals { get; private set; } = new List<Rental>();
+        public virtual ICollection<Rental> BookRentals { get; private set; } = new List<Rental>();
 
         #endregion
 
