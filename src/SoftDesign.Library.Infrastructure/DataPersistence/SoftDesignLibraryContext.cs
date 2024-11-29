@@ -1,14 +1,16 @@
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using MySql.Data.EntityFramework;
 using SoftDesign.Library.Domain.Entities.Books;
 using SoftDesign.Library.Domain.Entities.Rentals;
 using SoftDesign.Library.Domain.Entities.Users;
 
 namespace SoftDesign.Library.Infrastructure.DataPersistence
 {
+    [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class SoftDesignLibraryContext : DbContext
     {
-        public SoftDesignLibraryContext() 
+        public SoftDesignLibraryContext()
             : base("name=SoftDesignLibrary")
         {
 
@@ -27,19 +29,20 @@ namespace SoftDesign.Library.Infrastructure.DataPersistence
                 .ToTable("Books");
 
             modelBuilder.Entity<Book>()
-                .HasIndex(b => b.Isbn)
-                .IsUnique();
-            
+                .Property(b => b.Isbn)
+                .IsRequired()
+                .HasMaxLength(50);
+
             modelBuilder.Entity<Book>()
                 .Property(b => b.Title)
                 .IsRequired()
                 .HasMaxLength(255);
-            
+
             modelBuilder.Entity<Book>()
                 .Property(b => b.Author)
                 .IsRequired()
                 .HasMaxLength(100);
-            
+
             #endregion
             #region === RENTALS ===
 
@@ -51,7 +54,7 @@ namespace SoftDesign.Library.Infrastructure.DataPersistence
             #region === USERS ===
 
             modelBuilder.Entity<User>()
-                .HasKey(u => u.Id)
+                .HasKey(b => b.Id)
                 .ToTable("Users");
 
             modelBuilder.Entity<User>()
@@ -61,44 +64,44 @@ namespace SoftDesign.Library.Infrastructure.DataPersistence
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
-            
+
             modelBuilder.Entity<User>()
                 .Property(u => u.Username)
                 .IsRequired()
                 .HasMaxLength(50);
-            
+
             modelBuilder.Entity<User>()
                 .Property(u => u.PasswordHash)
                 .IsRequired()
                 .HasMaxLength(255);
-            
+
             modelBuilder.Entity<User>()
                 .Property(u => u.Email)
                 .IsRequired()
                 .HasMaxLength(255);
-            
+
             modelBuilder.Entity<User>()
                 .Property(u => u.FirstName)
                 .HasMaxLength(100);
-            
+
             modelBuilder.Entity<User>()
                 .Property(u => u.LastName)
                 .HasMaxLength(100);
 
             #endregion
-            
+
             modelBuilder.Entity<Rental>()
                 .HasRequired(r => r.Book)
-                .WithMany()
+                .WithMany(r => r.BookRentals)
                 .HasForeignKey(r => r.BookId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Rental>()
                 .HasRequired(r => r.User)
-                .WithMany()
+                .WithMany(r => r.UserRentals)
                 .HasForeignKey(r => r.UserId)
                 .WillCascadeOnDelete(false);
-            
+
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
