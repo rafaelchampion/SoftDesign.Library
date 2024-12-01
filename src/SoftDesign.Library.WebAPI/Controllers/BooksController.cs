@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using SoftDesign.Library.Cross.Core.RequestModels.Rental;
 using SoftDesign.Library.Cross.Core.ResponseModels.Book;
-using SoftDesign.Library.Cross.Core.ResponseModels.Rent;
+using SoftDesign.Library.Cross.Core.ResponseModels.Rental;
 using SoftDesign.Library.Cross.Core.Results;
 using SoftDesign.Library.Domain.Interfaces.Services;
 using SoftDesign.Library.WebAPI.Filters;

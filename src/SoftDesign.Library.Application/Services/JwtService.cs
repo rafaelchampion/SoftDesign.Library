@@ -7,7 +7,7 @@ namespace SoftDesign.Library.Services.Services
 {
     public class JwtService
     {
-        private static readonly string SecretKey = "8k}:0QP1ml&0-4r+fOn!1UHiSt6k@B&qW;6-wG]17oM76d6]?9";
+        private const string SecretKey = "8k}:0QP1ml&0-4r+fOn!1UHiSt6k@B&qW;6-wG]17oM76d6]?9";
         private static readonly byte[] SecretKeyBytes = Convert.FromBase64String(Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(SecretKey)));
 
         public static string GenerateToken(string username, string role, int expireMinutes = 60)
@@ -46,7 +46,7 @@ namespace SoftDesign.Library.Services.Services
                 ValidateLifetime = true
             };
 
-            return tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+            return tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
         }
     }
 }

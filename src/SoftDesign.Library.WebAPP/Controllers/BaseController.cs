@@ -7,13 +7,10 @@ namespace SoftDesign.Library.WebAPP.Controllers
     {
         protected ActionResult RedirectOnFailure(Result result, string errorMessage = null)
         {
-            if (result == null || !result.IsSuccess)
-            {
-                errorMessage = errorMessage ?? result?.ErrorMessage ?? "An unexpected error occurred.";
-                return RedirectToAction("Error", "Home", new { errorMessage });
-            }
+            if (result != null && result.IsSuccess) return null;
+            errorMessage = errorMessage ?? result?.ErrorMessage ?? "An unexpected error occurred.";
+            return RedirectToAction("Error", "Home", new { errorMessage });
 
-            return null;
         }
     }
 }

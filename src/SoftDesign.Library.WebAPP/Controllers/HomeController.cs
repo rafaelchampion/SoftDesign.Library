@@ -18,17 +18,10 @@ namespace SoftDesign.Library.WebAPP.Controllers
 
             var response = client.Execute<DashboardViewModel>(request);
 
-            if (response.IsSuccessful)
-            {
-                var data = JsonConvert.DeserializeObject<Result<DashboardViewModel>>(response.Content);
-                var failureRedirect = RedirectOnFailure(data, data.ErrorMessage);
-                if (failureRedirect != null)
-                {
-                    return failureRedirect;
-                }
-                return View(data.Value);
-            }
-            return View(new DashboardViewModel());
+            if (!response.IsSuccessful) return View(new DashboardViewModel());
+            var data = JsonConvert.DeserializeObject<Result<DashboardViewModel>>(response.Content);
+            var failureRedirect = RedirectOnFailure(data, data.ErrorMessage);
+            return failureRedirect ?? View(data.Value);
         }
 
         public ActionResult Error(string errorMessage)

@@ -1,10 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SoftDesign.Library.Cross.Core.ResponseModels.Book;
-using SoftDesign.Library.Cross.Core.ResponseModels.Rent;
+using SoftDesign.Library.Cross.Core.ResponseModels.Rental;
 using SoftDesign.Library.Cross.Core.Results;
 using SoftDesign.Library.Domain.Entities.Books;
 using SoftDesign.Library.Domain.Interfaces.Repositories;
@@ -73,7 +72,7 @@ namespace SoftDesign.Library.Services.Services
         {
             searchQuery = searchQuery.Trim();
             IList<Book> query = null;
-            if (searchQuery != null && !string.IsNullOrWhiteSpace(searchQuery))
+            if (!string.IsNullOrWhiteSpace(searchQuery))
             {
                 query = await _bookRepository.ReadAllWithParametersAsNoTrackingIncluding(x =>
                     x.Title.ToLower().Contains(searchQuery.ToLower()) ||
@@ -86,7 +85,7 @@ namespace SoftDesign.Library.Services.Services
             }
             try
             {
-                var data = query?.Select(x => ConvertToBookResponse(x));
+                var data = query?.Select(ConvertToBookResponse);
                 return Result<IEnumerable<BookResponse>>.Success(data);
             }
             catch (System.Exception ex)
@@ -128,19 +127,19 @@ namespace SoftDesign.Library.Services.Services
         {
             var query = await _bookRepository.ReadAllAsNoTracking();
             var random = new Random();
-            int index = random.Next(query.Count);
+            var index = random.Next(query.Count);
             return Result<BookResponse>.Success(ConvertToBookResponse(query[index]));
         }
 
         public async Task<Result<BookResponse>> MostRented()
         {
-            var result = await _bookRepository.ReadAllWithParametersAsNoTrackingIncluding(x => x.BookRentals.Count() > 0, includes: x => x.BookRentals);
+            var result = await _bookRepository.ReadAllWithParametersAsNoTrackingIncluding(x => x.BookRentals.Any(), includes: x => x.BookRentals);
             return Result<BookResponse>.Success(ConvertToBookResponse(result.OrderByDescending(x => x.BookRentals.Count()).Take(1).FirstOrDefault()));
         }
 
         public async Task<Result<int>> CountRented()
         {
-            var result = await _bookRepository.ReadAllWithParametersAsNoTrackingIncluding(x => x.BookRentals.Where(y=>y.ActualReturnDate == null).Count() > 0 , includes: x => x.BookRentals);
+            var result = await _bookRepository.ReadAllWithParametersAsNoTrackingIncluding(x => x.BookRentals.Count(y => y.ActualReturnDate == null) > 0 , includes: x => x.BookRentals);
             return Result<int>.Success(result.Count());
         }
     }

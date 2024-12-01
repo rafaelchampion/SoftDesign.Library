@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using RestSharp;
 using SoftDesign.Library.Cross.Core.ResponseModels.Book;
-using SoftDesign.Library.Cross.Core.ResponseModels.Rent;
+using SoftDesign.Library.Cross.Core.ResponseModels.Rental;
 using SoftDesign.Library.Cross.Core.Results;
 using SoftDesign.Library.Cross.Core.ViewModels;
 using SoftDesign.Library.WebAPP.Middleware;
@@ -31,14 +30,12 @@ namespace SoftDesign.Library.WebAPP.Controllers
 
             var response = client.Execute<List<BookResponse>>(request);
 
-            if (response.IsSuccessful)
+            if (!response.IsSuccessful) return View(model);
+            var data = JsonConvert.DeserializeObject<Result<IEnumerable<BookResponse>>>(response.Content, new JsonSerializerSettings
             {
-                var data = JsonConvert.DeserializeObject<Result<IEnumerable<BookResponse>>>(response.Content, new JsonSerializerSettings
-                {
-                    DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind
-                });
-                model.BookList = data.Value.ToList();
-            }
+                DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind
+            });
+            model.BookList = data.Value.ToList();
             return View(model);
         }
 
@@ -60,21 +57,13 @@ namespace SoftDesign.Library.WebAPP.Controllers
 
             var response = client.Execute<BookResponse>(request);
 
-            if (response.IsSuccessful)
+            if (!response.IsSuccessful) return View(new BookResponse());
+            var data = JsonConvert.DeserializeObject<Result<BookResponse>>(response.Content, new JsonSerializerSettings
             {
-                var data = JsonConvert.DeserializeObject<Result<BookResponse>>(response.Content, new JsonSerializerSettings
-                {
-                    DateTimeZoneHandling = DateTimeZoneHandling.Local
-                });
-                var failureRedirect = RedirectOnFailure(data, "Book not found.");
-                if (failureRedirect != null)
-                {
-                    return failureRedirect;
-                }
-                return View(data.Value);
-            }
-
-            return View(new BookResponse());
+                DateTimeZoneHandling = DateTimeZoneHandling.Local
+            });
+            var failureRedirect = RedirectOnFailure(data, "Book not found.");
+            return failureRedirect ?? View(data.Value);
         }
 
         [HttpPost]
@@ -90,26 +79,23 @@ namespace SoftDesign.Library.WebAPP.Controllers
 
             var response = client.Execute<BookResponse>(request);
 
-            if (response.IsSuccessful)
+            if (!response.IsSuccessful) return View(new BookResponse());
+            var data = JsonConvert.DeserializeObject<Result<BookResponse>>(response.Content);
+            var failureRedirect = RedirectOnFailure(data, data.ErrorMessage);
+            if (failureRedirect != null)
             {
-                var data = JsonConvert.DeserializeObject<Result<BookResponse>>(response.Content);
-                var failureRedirect = RedirectOnFailure(data, data.ErrorMessage);
-                if (failureRedirect != null)
-                {
-                    return failureRedirect;
-                }
-                if (newBook)
-                {
-                    TempData["CreateSuccess"] = true;
-                }
-                else
-                {
-                    TempData["UpdateSuccess"] = true;
-                }
-                return View(data.Value);
+                return failureRedirect;
             }
+            if (newBook)
+            {
+                TempData["CreateSuccess"] = true;
+            }
+            else
+            {
+                TempData["UpdateSuccess"] = true;
+            }
+            return View(data.Value);
 
-            return View(new BookResponse());
         }
 
         [HttpPost]
@@ -123,19 +109,16 @@ namespace SoftDesign.Library.WebAPP.Controllers
 
             var response = client.Execute<List<RentalResponse>>(request);
 
-            if (response.IsSuccessful)
+            if (!response.IsSuccessful) return View(new RentalResponse());
+            var data = JsonConvert.DeserializeObject<Result<RentalResponse>>(response.Content);
+            var failureRedirect = RedirectOnFailure(data, data.ErrorMessage);
+            if (failureRedirect != null)
             {
-                var data = JsonConvert.DeserializeObject<Result<RentalResponse>>(response.Content);
-                var failureRedirect = RedirectOnFailure(data, data.ErrorMessage);
-                if (failureRedirect != null)
-                {
-                    return failureRedirect;
-                }
-                TempData["BookRentSuccess"] = true;
-                return RedirectToAction("Index", new { model = new BookListViewModel() });
+                return failureRedirect;
             }
+            TempData["BookRentSuccess"] = true;
+            return RedirectToAction("Index", new { model = new BookListViewModel() });
 
-            return View(new RentalResponse());
         }
 
         [HttpPost]
@@ -148,19 +131,16 @@ namespace SoftDesign.Library.WebAPP.Controllers
 
             var response = client.Execute<List<RentalResponse>>(request);
 
-            if (response.IsSuccessful)
+            if (!response.IsSuccessful) return View(new RentalResponse());
+            var data = JsonConvert.DeserializeObject<Result<RentalResponse>>(response.Content);
+            var failureRedirect = RedirectOnFailure(data, data.ErrorMessage);
+            if (failureRedirect != null)
             {
-                var data = JsonConvert.DeserializeObject<Result<RentalResponse>>(response.Content);
-                var failureRedirect = RedirectOnFailure(data, data.ErrorMessage);
-                if (failureRedirect != null)
-                {
-                    return failureRedirect;
-                }
-                TempData["BookReturnSuccess"] = true;
-                return RedirectToAction("Index", new { model = new BookListViewModel() });
+                return failureRedirect;
             }
+            TempData["BookReturnSuccess"] = true;
+            return RedirectToAction("Index", new { model = new BookListViewModel() });
 
-            return View(new RentalResponse());
         }
     }
 }

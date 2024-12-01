@@ -32,7 +32,7 @@ namespace SoftDesign.Library.WebAPP.Controllers
             var request = ApiRequestMiddleware.CreateRequest("/authentication/login", Method.POST);
             request.AddJsonBody(new { username = model.Username, password = model.Password });
 
-            var responseJson = client.Execute(request);
+            var responseJson = await client.ExecuteAsync(request);
             var response = JsonConvert.DeserializeObject<Result<AuthenticationResponse>>(responseJson.Content);
 
             if (responseJson.IsSuccessful && response.IsSuccess)

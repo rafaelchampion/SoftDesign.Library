@@ -1,12 +1,13 @@
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using SoftDesign.Library.Cross.Core.RequestModels.User;
-using SoftDesign.Library.Cross.Core.ResponseModels.Book;
 using SoftDesign.Library.Cross.Core.Results;
 using SoftDesign.Library.Domain.Interfaces.Services;
+using SoftDesign.Library.WebAPI.Filters;
 
 namespace SoftDesign.Library.WebAPI.Controllers
 {
+    [JwtAuthenticationFilter]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

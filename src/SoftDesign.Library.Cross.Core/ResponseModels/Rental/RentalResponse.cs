@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SoftDesign.Library.Cross.Core.ResponseModels.Rent
+namespace SoftDesign.Library.Cross.Core.ResponseModels.Rental
 {
     public class RentalResponse
     {

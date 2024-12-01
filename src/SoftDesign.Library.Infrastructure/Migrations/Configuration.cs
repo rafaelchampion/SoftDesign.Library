@@ -2,7 +2,6 @@
 {
     using SoftDesign.Library.Domain.Entities.Books;
     using SoftDesign.Library.Domain.Entities.Users;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
 
     internal sealed class Configuration : DbMigrationsConfiguration<DataPersistence.SoftDesignLibraryContext>

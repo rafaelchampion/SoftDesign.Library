@@ -23,10 +23,10 @@ namespace SoftDesign.Library.Services.Services
                 return Result<AuthenticationResponse>.Failure("Invalid username or password");
             }
             var token = JwtService.GenerateToken(user.Username, "User");
-            return Result<AuthenticationResponse>.Success(new AuthenticationResponse()
+            return Result<AuthenticationResponse>.Success(new AuthenticationResponse
             {
                 Token = token,
-                UserId = user.Id,
+                UserId = user.Id
             });
         }
     }

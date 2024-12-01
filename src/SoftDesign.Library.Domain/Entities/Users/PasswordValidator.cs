@@ -13,9 +13,9 @@ namespace SoftDesign.Library.Domain.Entities.Users
                 return Result.Failure("Password must have at least 8 characters.");
             if (password.Length > 30)
                 return Result.Failure("Password must not have more than 30 characters.");
-            var uppercaseRegex = new Regex(@"[A-Z]");
-            var lowercaseRegex = new Regex(@"[a-z]");
-            var numberRegex = new Regex(@"[0-9]");
+            var uppercaseRegex = new Regex("[A-Z]");
+            var lowercaseRegex = new Regex("[a-z]");
+            var numberRegex = new Regex("[0-9]");
             var specialCharRegex = new Regex(@"[#?!@$%^&*\-]");
 
             if (!uppercaseRegex.IsMatch(password))

@@ -9,7 +9,7 @@ namespace SoftDesign.Library.Infrastructure.DataPersistence.Repositories
 {
     public class BookRepository : Repository<Book>, IBookRepository
     {
-        private readonly DbContext _context;
+        private new readonly DbContext _context;
 
         public BookRepository(DbContext context) : base(context)
         {

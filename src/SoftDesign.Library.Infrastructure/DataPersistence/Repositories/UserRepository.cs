@@ -6,7 +6,7 @@ namespace SoftDesign.Library.Infrastructure.DataPersistence.Repositories
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        public readonly DbContext _context;
+        public new readonly DbContext _context;
 
         public UserRepository(DbContext context) : base(context)
         {

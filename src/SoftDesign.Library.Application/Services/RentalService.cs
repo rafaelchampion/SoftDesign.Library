@@ -1,5 +1,4 @@
 using SoftDesign.Library.Cross.Core.RequestModels.Rental;
-using SoftDesign.Library.Cross.Core.ResponseModels.Rent;
 using SoftDesign.Library.Cross.Core.Results;
 using SoftDesign.Library.Domain.Entities.Rentals;
 using SoftDesign.Library.Domain.Entities.Users;
@@ -7,8 +6,8 @@ using SoftDesign.Library.Domain.Interfaces.Repositories;
 using SoftDesign.Library.Domain.Interfaces.Services;
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
+using SoftDesign.Library.Cross.Core.ResponseModels.Rental;
 
 namespace SoftDesign.Library.Services.Services
 {
@@ -30,7 +29,7 @@ namespace SoftDesign.Library.Services.Services
                 ActualReturnDate = rental.ActualReturnDate,
                 ExpectedReturnDate = rental.ExpectedReturnDate,
                 RentalDate = rental.RentalDate,
-                RenterUsername = rental.User?.Username ?? string.Empty,
+                RenterUsername = rental.User?.Username ?? string.Empty
             };
         }
 

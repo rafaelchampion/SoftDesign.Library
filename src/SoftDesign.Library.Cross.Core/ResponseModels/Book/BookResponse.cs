@@ -1,6 +1,6 @@
-using SoftDesign.Library.Cross.Core.ResponseModels.Rent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using SoftDesign.Library.Cross.Core.ResponseModels.Rental;
 
 namespace SoftDesign.Library.Cross.Core.ResponseModels.Book
 {

@@ -1,12 +1,13 @@
-using SoftDesign.Library.Cross.Core.ResponseModels.Book;
 using SoftDesign.Library.Cross.Core.Results;
 using SoftDesign.Library.Cross.Core.ViewModels;
 using SoftDesign.Library.Domain.Interfaces.Services;
+using SoftDesign.Library.WebAPI.Filters;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace SoftDesign.Library.WebAPI.Controllers
 {
+    [JwtAuthenticationFilter]
     public class HomeController : Controller
     {
         private readonly IBookService _bookService;
@@ -31,7 +32,7 @@ namespace SoftDesign.Library.WebAPI.Controllers
                 var featuredBookResult = await _bookService.FeaturedBook();
                 var mostRentedResult = await _bookService.MostRented();
 
-                var dashboardViewModel = new DashboardViewModel()
+                var dashboardViewModel = new DashboardViewModel
                 {
                     ActiveRenterCount = renterCountResult.Value,
                     FeaturedBook = featuredBookResult.Value,
@@ -46,7 +47,6 @@ namespace SoftDesign.Library.WebAPI.Controllers
             catch (System.Exception ex)
             {
                 return Json(Result.Failure(ex.Message), JsonRequestBehavior.AllowGet);
-                throw;
             }
         }
     }
