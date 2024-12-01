@@ -5,6 +5,6 @@ namespace SoftDesign.Library.Domain.Interfaces.Services
 {
     public interface IAuthenticationService
     {
-        Task<AuthenticationResult> AuthenticateAsync(string username, string password);
+        Task<Result<string>> Authenticate(string username, string password);
     }
 }

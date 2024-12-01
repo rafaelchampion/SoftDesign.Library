@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using SoftDesign.Library.Domain.Entities.Books;
 using SoftDesign.Library.Domain.Entities.Core;
 using SoftDesign.Library.Domain.Entities.Users;
