@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SoftDesign.Library.Infrastructure.DataPersistence.Repositories
 {
@@ -19,49 +20,136 @@ namespace SoftDesign.Library.Infrastructure.DataPersistence.Repositories
             _dbSet = _context.Set<TEntity>();
         }
 
-        public TEntity GetById(long id)
+        #region === CREATE ===
+
+        public async Task Create(TEntity obj)
         {
-            return _dbSet.Find(id);
+            _dbSet.Add(obj);
+            await SaveChanges();
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task CreateList(List<TEntity> list)
         {
-            return _dbSet.ToList();
+            _dbSet.AddRange(list);
+            await SaveChanges();
+        }
+        
+        #endregion
+
+        public async Task<int> Count()
+        {
+            return await _dbSet.CountAsync();
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public async Task<int> Count(Expression<Func<TEntity, bool>> func)
         {
-            return _dbSet.Where(predicate).ToList();
+            return await _dbSet.CountAsync();
         }
 
-        public void Add(TEntity entity)
+        public async Task<bool> Exists(Expression<Func<TEntity, bool>> func)
         {
-            if (entity == null) throw new ArgumentNullException(nameof(entity));
-            _dbSet.Add(entity);
+            return await _dbSet.AnyAsync(func);
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public async Task<TEntity> Read(long entityId)
         {
-            if (entities == null) throw new ArgumentNullException(nameof(entities));
-            _dbSet.AddRange(entities);
+            return await _dbSet.FindAsync(entityId);
+        }
+        
+        public async Task<TEntity> ReadAsNoTracking(long entityId)
+        {
+            var entity = await _dbSet.FindAsync(entityId);
+            if (entity != null)
+                _context.Entry(entity).State = EntityState.Detached;
+
+            return entity;
         }
 
-        public void Remove(TEntity entity)
+        public async Task<TEntity> ReadWithParameters(Expression<Func<TEntity, bool>> func)
         {
-            if (entity == null) throw new ArgumentNullException(nameof(entity));
-            _dbSet.Remove(entity);
+            return await _dbSet.Where(func).FirstOrDefaultAsync();
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entities)
+        public async Task<TEntity> ReadWithParametersIncluding(Expression<Func<TEntity, bool>> func, params Expression<Func<TEntity, object>>[] includes)
         {
-            if (entities == null) throw new ArgumentNullException(nameof(entities));
-            _dbSet.RemoveRange(entities);
+            var query = _dbSet.Where(func);
+            return await includes.Aggregate(query, (current, include) => current.Include(include)).FirstOrDefaultAsync();
         }
 
-        public void Update(TEntity entity)
+        public async Task<TEntity> ReadWithParametersAsNoTracking(Expression<Func<TEntity, bool>> func)
         {
-            if (entity == null) throw new ArgumentNullException(nameof(entity));
-            _context.Entry(entity).State = EntityState.Modified;
+            return await _dbSet.Where(func).AsNoTracking().FirstOrDefaultAsync();
+        }
+
+        public async Task<TEntity> ReadWithParametersAsNoTrackingIncluding(Expression<Func<TEntity, bool>> func, params Expression<Func<TEntity, object>>[] includes)
+        {
+            var query = _dbSet.Where(func);
+            return await includes.Aggregate(query, (current, include) => current.Include(include)).AsNoTracking()
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<IList<TEntity>> ReadAll()
+        {
+            return await _dbSet.ToListAsync();
+        }
+
+        public async Task<IList<TEntity>> ReadAllAsNoTracking()
+        {
+            return await _dbSet.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IList<TEntity>> ReadAllWithParameters(Expression<Func<TEntity, bool>> func)
+        {
+            return await _dbSet.Where(func).ToListAsync();
+        }
+
+        public async Task<IList<TEntity>> ReadAllWithParametersAsNoTracking(Expression<Func<TEntity, bool>> func)
+        {
+            return await _dbSet.Where(func).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IList<TEntity>> ReadAllIncluding(params Expression<Func<TEntity, object>>[] includes)
+        {
+            var query = _dbSet.AsQueryable();
+            return await includes.Aggregate(query, (current, include) => current.Include(include)).ToListAsync();
+        }
+
+        public async Task<IList<TEntity>> ReadAllAsNoTrackingIncluding(params Expression<Func<TEntity, object>>[] includes)
+        {
+            var query = _dbSet.AsQueryable();
+            return await includes.Aggregate(query, (current, include) => current.Include(include)).AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<IList<TEntity>> ReadAllWithParametersIncluding(Expression<Func<TEntity, bool>> func, params Expression<Func<TEntity, object>>[] includes)
+        {
+            var query = _dbSet.Where(func);
+            return await includes.Aggregate(query, (current, include) => current.Include(include)).ToListAsync();
+        }
+
+        public async Task<IList<TEntity>> ReadAllWithParametersAsNoTrackingIncluding(Expression<Func<TEntity, bool>> func, params Expression<Func<TEntity, object>>[] includes)
+        {
+            var query = _dbSet.Where(func);
+            return await includes.Aggregate(query, (current, include) => current.Include(include)).AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task Update(TEntity obj)
+        {
+            _dbSet.Attach(obj);
+            _context.Entry(obj).State = EntityState.Modified;
+            await SaveChanges();
+        }
+
+        public async Task Delete(TEntity obj)
+        {
+            _dbSet.Remove(obj);
+            await SaveChanges();
+        }
+        
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }
