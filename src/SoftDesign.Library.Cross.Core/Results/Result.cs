@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace SoftDesign.Library.Cross.Core.Results
 {
     public class Result
@@ -19,6 +21,7 @@ namespace SoftDesign.Library.Cross.Core.Results
     {
         public T Value { get; }
 
+        [JsonConstructor]
         private Result(T value, bool isSuccess, string errorMessage)
             : base(isSuccess, errorMessage)
         {
