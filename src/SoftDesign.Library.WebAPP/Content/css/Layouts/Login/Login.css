@@ -52,6 +52,10 @@ body {
     color: var(--text-primary);
 }
 
+.logo{
+    max-width: 80px;
+}
+
 .form-group {
     margin-bottom: 1rem;
     text-align: left;

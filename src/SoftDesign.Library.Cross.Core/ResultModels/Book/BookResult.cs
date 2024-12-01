@@ -6,6 +6,6 @@ namespace SoftDesign.Library.Cross.Core.ResultModels.Book
         public string Author { get; set; }
         public string Isbn { get; set; }
         public bool IsRented { get; set; }
-        public string RentUsername { get; set; }
+        public string RenterUsername { get; set; }
     }
 }

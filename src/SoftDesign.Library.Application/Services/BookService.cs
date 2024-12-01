@@ -50,7 +50,7 @@ namespace SoftDesign.Library.Services.Services
                 Author = x.Author, 
                 Isbn = x.Isbn,
                 IsRented = x.IsRented,
-                RentUsername = x.LastRental?.User?.Username
+                RenterUsername = x.LastRental?.User?.Username
             });
         }
     }

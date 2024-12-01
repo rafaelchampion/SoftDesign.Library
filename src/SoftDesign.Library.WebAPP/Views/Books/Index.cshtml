@@ -3,28 +3,47 @@
     ViewBag.Title = "Books";
 }
 
-<h2>Books</h2>
+<h2>Books list</h2>
+
+<div>
+    @*<span>Filter:</span>*@
+</div>
 
 <div class="table-container">
     <table class="main-table">
         <thead>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>ISBN</th>
-            <th>Rented</th>
-        </tr>
+            <tr>
+                <th>Details</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th>Rented</th>
+                <th>Renter</th>
+                <th>Action</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var book in Model)
-        {
-            <tr>
-                <td>@book.Title</td>
-                <td>@book.Author</td>
-                <td>@book.Isbn</td>
-                <td>@(book.IsRented ? "Yes" : "No")</td>
-            </tr>
-        }
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <th><button class="main-btn"><i class="fas fa-magnifying-glass"></i></button></th>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.Isbn</td>
+                    <td>@(book.IsRented ? "Yes" : "No")</td>
+                    <th>@(book.RenterUsername)</th>
+                    <th>
+                        @if (book.IsRented)
+                        {
+                            <button class="main-btn"><i class="fas fa-arrow-rotate-left"></i> RETURN</button>
+                        }
+                        else
+                        {
+                            <button class="main-btn"><i class="fas fa-hand-holding-medical"></i> RENT</button>
+                        }
+                    </th>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
