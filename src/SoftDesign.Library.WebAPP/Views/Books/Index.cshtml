@@ -1,0 +1,30 @@
+@model List<SoftDesign.Library.Cross.Core.ResultModels.Book.BookResult>
+@{
+    ViewBag.Title = "Books";
+}
+
+<h2>Books</h2>
+
+<div class="table-container">
+    <table class="main-table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Rented</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Isbn</td>
+                <td>@(book.IsRented ? "Yes" : "No")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

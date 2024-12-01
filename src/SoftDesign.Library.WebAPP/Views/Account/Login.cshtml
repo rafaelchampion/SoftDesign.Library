@@ -1,0 +1,25 @@
+@model SoftDesign.Library.Cross.Core.RequestModels.Authentication.LoginRequestModel
+@{
+    Layout = "/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="login-container">
+    <h1>Soft Design Library</h1>
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Username)
+            @Html.TextBoxFor(m => m.Username)
+            @Html.ValidationMessageFor(m => m.Username)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+        <div>
+            @Html.ValidationSummary()
+        </div>
+        <button class="login-btn" type="submit">Log In</button>
+    }
+</div>

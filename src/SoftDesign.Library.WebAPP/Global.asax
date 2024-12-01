@@ -1,0 +1,1 @@
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="SoftDesign.Library.WebAPP.MvcApplication" Language="C#" %>
