@@ -108,6 +108,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SoftDesign.Library.Cross.Core\SoftDesign.Library.Cross.Core.csproj">
+      <Project>{2AAED12E-8F15-43D2-B9EA-4E9840BD09F8}</Project>
+      <Name>SoftDesign.Library.Cross.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SoftDesign.Library.Domain\SoftDesign.Library.Domain.csproj">
       <Project>{3d8936b0-9291-4664-aece-0b097df6175b}</Project>
       <Name>SoftDesign.Library.Domain</Name>
