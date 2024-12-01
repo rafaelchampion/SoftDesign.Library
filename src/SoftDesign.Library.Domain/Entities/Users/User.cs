@@ -23,7 +23,7 @@ namespace SoftDesign.Library.Domain.Entities.Users
         public virtual ICollection<Rental> UserRentals { get; set; } = new List<Rental>();
 
         #endregion
-        
+
         #region === CONSTRUCTORS ===
 
         private User()//FOR EF

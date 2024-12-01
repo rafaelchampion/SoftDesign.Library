@@ -9,14 +9,41 @@ namespace SoftDesign.Library.Domain.Entities.Books
     {
         public static Result<Book> Create(string title, string author, string isbn)
         {
-            var newBook = new Book(title, author, isbn);
+            var newBook = new Book(title.Trim(), author.Trim(), isbn.Trim());
             var validationResult = BookValidator.Validate(newBook);
 
             return !validationResult.IsSuccess
                 ? Result<Book>.Failure(validationResult.ErrorMessage)
                 : Result<Book>.Success(newBook);
         }
-        
+
+        public Result<Book> UpdateTitle(string title)
+        {
+            Title = title.Trim();
+            var validationResult = BookValidator.Validate(this);
+            return !validationResult.IsSuccess
+                ? Result<Book>.Failure(validationResult.ErrorMessage)
+                : Result<Book>.Success(this);
+        }
+
+        public Result<Book> UpdateAuthor(string author)
+        {
+            Author = author.Trim();
+            var validationResult = BookValidator.Validate(this);
+            return !validationResult.IsSuccess
+                ? Result<Book>.Failure(validationResult.ErrorMessage)
+                : Result<Book>.Success(this);
+        }
+
+        public Result<Book> UpdateISBN(string isbn)
+        {
+            Isbn = isbn.Trim();
+            var validationResult = BookValidator.Validate(this);
+            return !validationResult.IsSuccess
+                ? Result<Book>.Failure(validationResult.ErrorMessage)
+                : Result<Book>.Success(this);
+        }
+
         public Result<Book> Rent(User user, DateTime rentalDate, DateTime expectedReturnDate)
         {
             if (IsRented)

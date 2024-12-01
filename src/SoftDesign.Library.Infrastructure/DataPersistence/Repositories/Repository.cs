@@ -11,8 +11,8 @@ namespace SoftDesign.Library.Infrastructure.DataPersistence.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
-        private readonly DbContext _context;
-        private readonly DbSet<TEntity> _dbSet;
+        public readonly DbContext _context;
+        public readonly DbSet<TEntity> _dbSet;
 
         public Repository(DbContext context)
         {

@@ -1,14 +1,20 @@
-@model List<SoftDesign.Library.Cross.Core.ResultModels.Book.BookResult>
+@model SoftDesign.Library.Cross.Core.ViewModels.BookListViewModel
 @{
     ViewBag.Title = "Books";
 }
 
 <h2>Books list</h2>
 
-<div>
-    @*<span>Filter:</span>*@
-</div>
 
+@using (Html.BeginForm())
+{
+    <label>Filter</label>
+    @Html.TextBoxFor(x => x.SearchQuery, new { @class = "form-control" })
+    <br />
+    <button type="submit" class="default-btn primary"><i class="fas fa-magnifying-glass default-btn-icon"></i> Search</button>
+    <a href="/books/edit" class="default-btn primary"><i class="fas fa-plus default-btn-icon"></i> Add new book</a>
+}
+<br />
 <div class="table-container">
     <table class="main-table">
         <thead>
@@ -23,25 +29,44 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var book in Model)
+            @foreach (var book in Model.BookList.ToList())
             {
                 <tr>
-                    <th><button class="main-btn"><i class="fas fa-magnifying-glass"></i></button></th>
-                    <td>@book.Title</td>
-                    <td>@book.Author</td>
-                    <td>@book.Isbn</td>
-                    <td>@(book.IsRented ? "Yes" : "No")</td>
-                    <th>@(book.RenterUsername)</th>
-                    <th>
+                    <td data-label="View"><a class="main-btn" href="/Books/Edit?id=@book.Id"><i class="fas fa-magnifying-glass"></i></a></td>
+                    <td data-label="Title">@book.Title</td>
+                    <td data-label="Author">@book.Author</td>
+                    <td data-label="ISBN">@book.Isbn</td>
+                    <td data-label="Rent status">
                         @if (book.IsRented)
                         {
-                            <button class="main-btn"><i class="fas fa-arrow-rotate-left"></i> RETURN</button>
+                            <span class="status status-inactive">Rented</span>
                         }
                         else
                         {
-                            <button class="main-btn"><i class="fas fa-hand-holding-medical"></i> RENT</button>
+                            <span class="status status-active">Not rented</span>
                         }
-                    </th>
+                    </td>
+                    <td data-label="Renter username">@(book.RenterUsername)</td>
+                    <td data-label="Action">
+                        @if (book.IsRented)
+                        {
+                            <form action="@Url.Action("ReturnBook", "Books")" method="post" style="display:inline;">
+                                <input type="hidden" name="bookId" value="@book.Id" />
+                                <button type="submit" class="main-btn">
+                                    <i class="fas fa-arrow-rotate-left"></i> RETURN
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form action="@Url.Action("RentBook", "Books")" method="post" style="display:inline;">
+                                <input type="hidden" name="bookId" value="@book.Id" />
+                                <button type="submit" class="main-btn">
+                                    <i class="fas fa-hand-holding-medical"></i> RENT
+                                </button>
+                            </form>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>

@@ -21,7 +21,6 @@ namespace SoftDesign.Library.Domain.Interfaces.Repositories
         Task<int> Count(Expression<Func<TEntity, bool>> func);
         Task<bool> Exists(Expression<Func<TEntity, bool>> func);
         Task<TEntity> Read(long entityId);
-        Task<TEntity> ReadAsNoTracking(long entityId);
         Task<TEntity> ReadWithParameters(Expression<Func<TEntity, bool>> func);
         Task<TEntity> ReadWithParametersIncluding(Expression<Func<TEntity, bool>> func, params Expression<Func<TEntity, object>>[] includes);
         Task<TEntity> ReadWithParametersAsNoTracking(Expression<Func<TEntity, bool>> func);

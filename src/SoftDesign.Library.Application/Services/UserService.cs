@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using SoftDesign.Library.Cross.Core.Results;
 using SoftDesign.Library.Domain.Entities.Users;
@@ -8,11 +9,23 @@ namespace SoftDesign.Library.Services.Services
 {
     public class UserService : IUserService
     {
-        private readonly IRepository<User> _userRepository;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(IRepository<User> userRepository)
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+        }
+
+        public async Task<Result<int>> RentersCount()
+        {
+            var result = await _userRepository.ReadAllWithParametersAsNoTrackingIncluding(x => x.UserRentals.Count() > 0, includes: x => x.UserRentals);
+            return Result<int>.Success(result.Count());
+        }
+
+        public async Task<Result<string>> GreatestRenter()
+        {
+            var result = await _userRepository.ReadAllWithParametersAsNoTrackingIncluding(x => x.UserRentals.Count() > 0, includes: x => x.UserRentals);
+            return Result<string>.Success(result.OrderByDescending(x=>x.UserRentals.Count()).Take(1).FirstOrDefault().Username);
         }
 
         public async Task<Result<User>> Create(string username, string password, string email)

@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using RestSharp;
 using SoftDesign.Library.Cross.Core.RequestModels.Authentication;
+using SoftDesign.Library.Cross.Core.ResponseModels.Authentication;
 using SoftDesign.Library.Cross.Core.Results;
 using SoftDesign.Library.WebAPP.Middleware;
 
@@ -32,11 +33,12 @@ namespace SoftDesign.Library.WebAPP.Controllers
             request.AddJsonBody(new { username = model.Username, password = model.Password });
 
             var responseJson = client.Execute(request);
-            var response = JsonConvert.DeserializeObject<Result<string>>(responseJson.Content);
+            var response = JsonConvert.DeserializeObject<Result<AuthenticationResponse>>(responseJson.Content);
 
             if (responseJson.IsSuccessful && response.IsSuccess)
             {
-                Session["JwtToken"] = response.Value;
+                Session["UserId"] = response.Value.UserId;
+                Session["JwtToken"] = response.Value.Token;
                 var returnUrl = Session["ReturnUrl"] as string;
                 if (!string.IsNullOrEmpty(returnUrl))
                 {

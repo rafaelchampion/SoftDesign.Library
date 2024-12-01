@@ -1,31 +1,65 @@
-﻿@{
+﻿@model SoftDesign.Library.Cross.Core.ViewModels.DashboardViewModel
+
+@{
     ViewBag.Title = "Home";
 }
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p>
-            <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a>
-        </p>
+<div class="dashboard-container">
+    <div class="dashboard-card">
+        <div class="card-icon">
+            <i class="fas fa-book"></i>
+        </div>
+        <h2 class="card-title">Total Books</h2>
+        <div class="card-value">@Model.TotalBookCount</div>
+        <div class="card-subtitle">In Library Collection</div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p>
-            <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a>
-        </p>
+
+    <div class="dashboard-card">
+        <div class="card-icon">
+            <i class="fas fa-book-reader"></i>
+        </div>
+        <h2 class="card-title">Currently Rented</h2>
+        <div class="card-value">@Model.RentedBookCount</div>
+        <div class="card-subtitle">Books in Circulation</div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p>
-            <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a>
-        </p>
+
+    <div class="dashboard-card">
+        <div class="card-icon">
+            <i class="fas fa-user-friends"></i>
+        </div>
+        <h2 class="card-title">Active Renters</h2>
+        <div class="card-value">@Model.ActiveRenterCount</div>
+        <div class="card-subtitle">Book Enthusiasts</div>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="card-icon">
+            <i class="fas fa-chart-line"></i>
+        </div>
+        <h2 class="card-title">Greatest renter</h2>
+        <div class="card-value">@Model.GreatestRenter</div>
+        <div class="card-subtitle">All time</div>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="card-icon">
+            <i class="fas fa-star"></i>
+        </div>
+        <h2 class="card-title">Featured Book</h2>
+        <div class="featured-book-info">
+            <strong>@Model.FeaturedBook.Title</strong>
+            <p>By @Model.FeaturedBook.Author</p>
+        </div>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="card-icon">
+            <i class="fas fa-arrow-trend-up"></i>
+        </div>
+        <h2 class="card-title">Most rented book</h2>
+        <div class="featured-book-info">
+            <strong>@Model.MostRentedBook.Title</strong>
+            <p>By @Model.MostRentedBook.Author</p>
+        </div>
     </div>
 </div>

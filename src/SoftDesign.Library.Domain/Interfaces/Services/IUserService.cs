@@ -6,6 +6,8 @@ namespace SoftDesign.Library.Domain.Interfaces.Services
 {
     public interface IUserService
     {
+        Task<Result<int>> RentersCount();
+        Task<Result<string>> GreatestRenter();
         Task<Result<User>> Create(string username, string password, string email);
     }
 }

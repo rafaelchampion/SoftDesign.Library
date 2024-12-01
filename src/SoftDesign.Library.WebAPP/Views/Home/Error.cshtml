@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="error-container">
+<div>
     <h1>An error occurred while processing your request</h1>
     <p>@Model</p>
-    <a class="btn-default primary" href="@Url.Action("Index", "Home")">Go back to Home</a>
+    <a class="default-btn primary" href="@Url.Action("Index", "Home")">Go back to Home</a>
 </div>

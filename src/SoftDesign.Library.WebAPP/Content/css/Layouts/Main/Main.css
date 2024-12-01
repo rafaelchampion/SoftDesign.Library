@@ -258,8 +258,174 @@ div:has(.sidebar.collapsed) .main-content {
     margin-top: 1rem;
 }
 
+.default-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .default-btn:hover {
+        text-decoration: none;
+    }
+
+    .default-btn.primary {
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+    }
+
+    .default-btn.secondary {
+        background-color: var(--bg-nav);
+        color: var(--text-secondary);
+        border: 1px solid var(--border-color);
+    }
+
+.default-btn-icon {
+    margin-right: 0.5rem;
+}
+
+.status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.status-active {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #2E7D32;
+}
+
+.status-inactive {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #D32F2F;
+}
+
+.status-pending {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #F57C00;
+}
+
 .main:hover {
     background-color: var(--accent-hover);
+}
+
+.registration-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.registration-title {
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.form-control {
+    min-width: 100%;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.form-control-readonly {
+    padding: 0.75rem;
+    color: var(--text-secondary);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.validation-error {
+    color: red;
+    font-size: 0.8rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+.dashboard-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.dashboard-card {
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+    }
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    text-align: center;
+    width: 100%;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    text-align: center;
+}
+
+.card-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    text-align: center;
+}
+
+.card-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+.featured-book {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.featured-book-info {
+    flex-grow: 1;
 }
 
 @media (max-width: 768px) {
@@ -342,6 +508,10 @@ div:has(.sidebar.collapsed) .main-content {
             border-bottom: 1px solid var(--border-color);
         }
 
+            .main-table td[data-label='Renter username']:empty {
+                display: none;
+            }
+
             .main-table td::before {
                 content: attr(data-label);
                 float: left;
@@ -354,4 +524,12 @@ div:has(.sidebar.collapsed) .main-content {
             .main-table td:last-child {
                 border-bottom: none;
             }
+
+        .main-table tr td:first-child {
+            border-top: 5px solid var(--border-color);
+        }
+
+        .main-table tr td:last-child {
+            border-bottom: 5px solid var(--border-color);
+        }
 }

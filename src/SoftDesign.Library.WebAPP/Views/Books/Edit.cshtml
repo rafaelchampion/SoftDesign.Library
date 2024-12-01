@@ -1,0 +1,98 @@
+﻿@model SoftDesign.Library.Cross.Core.ResponseModels.Book.BookResponse
+
+@{
+    ViewBag.Title = "Book details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="registration-container">
+    <h1 class="registration-title">Book details</h1>
+
+    @using (Html.BeginForm("Edit", "Books", FormMethod.Post, new { @class = "book-form" }))
+    {
+        @Html.HiddenFor(x => x.Id)
+        <div class="form-group">
+            @Html.LabelFor(m => m.Title, new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "validation-error" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Author, new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Author, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Author, "", new { @class = "validation-error" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Isbn, new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Isbn, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Isbn, "", new { @class = "validation-error" })
+        </div>
+
+        if (Model.Id > 0)
+        {
+            <div class="form-group">
+                @if (Model.IsRented)
+                {
+                    <span class="status status-inactive">Rented</span>
+                }
+                else
+                {
+                    <span class="status status-active">Not rented</span>
+                }
+            </div>
+
+            if (Model.IsRented)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RenterUsername, "Renter username", new { @class = "form-label" })
+                    @Html.DisplayFor(m => m.RenterUsername, new { @class = "form-control-readonly" })
+                </div>
+            }
+        }
+        if (Model.Id > 0)
+        {
+            <div class="table-container">
+                <table class="main-table">
+                    <thead>
+                        <tr>
+                            <th>Renter username</th>
+                            <th>Rental date</th>
+                            <th>Expected return date</th>
+                            <th>Actual return date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RentalHistory == null || Model.RentalHistory?.ToList().Count == 0)
+                        {
+                            <tr>
+                                <td colspan="4">No rental history for this book</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var rental in Model.RentalHistory?.ToList())
+                            {
+                                <tr>
+                                    <td data-label="Renter username">@rental.RenterUsername</td>
+                                    <td data-label="Rental date">@rental.RentalDate</td>
+                                    <td data-label="Expected return date">@rental.ExpectedReturnDate</td>
+                                    <td data-label="Actual return date">@rental.ActualReturnDate</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        <div class="form-actions">
+            <button type="submit" class="default-btn primary">
+                <i class="fas fa-save default-btn-icon"></i> Save Book
+            </button>
+            <a href="@Url.Action("Index", "Books")" class="default-btn secondary">
+                <i class="fas fa-times default-btn-icon"></i> Back
+            </a>
+        </div>
+    }
+</div>

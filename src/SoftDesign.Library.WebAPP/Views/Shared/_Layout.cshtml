@@ -38,15 +38,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="books" class="@(string.Equals(controllerName, "Books", StringComparison.InvariantCultureIgnoreCase) ? "active" : "")">
+                    <a href="/books" class="@(string.Equals(controllerName, "Books", StringComparison.InvariantCultureIgnoreCase) ? "active" : "")">
                         <i class="fas fa-book"></i>
                         <span>Books</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="@(string.Equals(controllerName, "Users", StringComparison.InvariantCultureIgnoreCase) ? "active" : "")">
-                        <i class="fas fa-user"></i>
-                        <span>Users</span>
                     </a>
                 </li>
                 <li>
@@ -62,6 +56,30 @@
     <div class="overlay"></div>
 
     <main class="main-content">
+        @if (TempData["CreateSuccess"] != null && (bool)TempData["CreateSuccess"] == true)
+        {
+            <div role="alert" class="alert alert-success alert-dismissable">
+                Record created successfully
+            </div>
+        }
+        @if (TempData["UpdateSuccess"] != null && (bool)TempData["UpdateSuccess"] == true)
+        {
+            <div role="alert" class="alert alert-success alert-dismissable">
+                Record updated successfully
+            </div>
+        }
+        @if (TempData["BookRentSuccess"] != null && (bool)TempData["BookRentSuccess"] == true)
+        {
+            <div role="alert" class="alert alert-success alert-dismissable">
+                Book rented successfully
+            </div>
+        }
+        @if (TempData["BookReturnSuccess"] != null && (bool)TempData["BookReturnSuccess"] == true)
+        {
+            <div role="alert" class="alert alert-success alert-dismissable">
+                Book returned successfully
+            </div>
+        }
         @RenderBody()
     </main>
 </div>

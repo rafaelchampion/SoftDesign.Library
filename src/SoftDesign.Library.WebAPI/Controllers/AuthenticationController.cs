@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using SoftDesign.Library.Cross.Core.ResponseModels.Authentication;
 using SoftDesign.Library.Cross.Core.Results;
 using SoftDesign.Library.Domain.Interfaces.Services;
 
@@ -20,10 +21,9 @@ namespace SoftDesign.Library.WebAPI.Controllers
             var result = await _authService.Authenticate(username, password);
             if (result == null || !result.IsSuccess)
             {
-                return Json(Result<string>.Failure(result.ErrorMessage));
+                return Json(Result<AuthenticationResponse>.Failure(result.ErrorMessage));
             }
-
-            return Json(Result<string>.Success(result.Value));
+            return Json(Result<AuthenticationResponse>.Success(result.Value));
         }
     }
 }

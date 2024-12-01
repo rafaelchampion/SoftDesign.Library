@@ -22,6 +22,9 @@ namespace SoftDesign.Library.Domain.Entities.Books
         public Rental LastRental => BookRentals.Where(x => x.ActualReturnDate == null)
             .OrderByDescending(x => x.RentalDate).FirstOrDefault();
 
+        [NotMapped]
+        public Rental LastUnreturnedRental => BookRentals.OrderByDescending(x => x.RentalDate).FirstOrDefault();
+
         #endregion
 
         #region === RELATIONSHIPS ===

@@ -1,45 +1,50 @@
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using SoftDesign.Library.Domain.Interfaces.Repositories;
-using System.Linq;
 using SoftDesign.Library.Domain.Entities.Books;
+using SoftDesign.Library.Domain.Entities.Rentals;
+using System.Linq;
 
 namespace SoftDesign.Library.Infrastructure.DataPersistence.Repositories
 {
-    public class BookRepository: IBookRepository
+    public class BookRepository : Repository<Book>, IBookRepository
     {
-        private readonly SoftDesignLibraryContext _context;
+        private readonly DbContext _context;
 
-        public BookRepository(SoftDesignLibraryContext context)
+        public BookRepository(DbContext context) : base(context)
         {
             _context = context;
         }
 
-        public async Task<Book> GetByIdAsync(int id)
+        public new async Task Update(Book book)
         {
-            return await _context.Books.FindAsync(id);
-        }
+            var entry = _context.Entry(book);
+            if (entry.State == EntityState.Detached)
+            {
+                _context.Set<Book>().Attach(book);
+            }
 
-        public async Task<IEnumerable<Book>> SearchAsync(string searchTerm)
-        {
-            return await _context.Books
-                .Where(b => 
-                    string.IsNullOrEmpty(searchTerm) || 
-                    b.Title.Contains(searchTerm) || 
-                    b.Author.Contains(searchTerm))
-                .ToListAsync();
-        }
+            entry.State = EntityState.Modified;
 
-        public async Task AddAsync(Book book)
-        {
-            _context.Books.Add(book);
-            await _context.SaveChangesAsync();
-        }
+            foreach (var rental in book.BookRentals)
+            {
+                var rentalEntry = _context.Entry(rental);
 
-        public async Task UpdateAsync(Book book)
-        {
-            _context.Entry(book).State = EntityState.Modified;
+                if (rentalEntry.State == EntityState.Detached)
+                {
+                    var existingRental = _context.Set<Rental>().Local.FirstOrDefault(r => r.Id == rental.Id);
+                    if (existingRental != null)
+                    {
+                        _context.Entry(existingRental).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        _context.Set<Rental>().Attach(rental);
+                    }
+                }
+                rentalEntry.State = rental.Id == 0 ? EntityState.Added : EntityState.Modified;
+            }
+
             await _context.SaveChangesAsync();
         }
     }
