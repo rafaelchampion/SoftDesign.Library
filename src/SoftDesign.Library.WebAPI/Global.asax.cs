@@ -1,7 +1,7 @@
-﻿using SoftDesign.Library.WebAPI.App_Start;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using SoftDesign.Library.WebAPI.App_Start;
 
 namespace SoftDesign.Library.WebAPI
 {
@@ -15,6 +15,7 @@ namespace SoftDesign.Library.WebAPI
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             UnityConfig.RegisterComponents();
             UnityMvcActivator.Start();
+            SwaggerConfig.Register();
         }
     }
 }

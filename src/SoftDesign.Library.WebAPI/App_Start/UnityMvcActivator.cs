@@ -1,7 +1,6 @@
-using SoftDesign.Library.WebAPI.App_Start;
 using System.Linq;
 using System.Web.Mvc;
-
+using SoftDesign.Library.WebAPI.App_Start;
 using Unity.AspNet.Mvc;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(SoftDesign.Library.WebAPI.UnityMvcActivator), nameof(SoftDesign.Library.WebAPI.UnityMvcActivator.Start))]
